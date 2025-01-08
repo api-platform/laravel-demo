@@ -1,0 +1,16 @@
+# Laravel / PHP-specific ignores
+/vendor/
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+phpstan.neon
+.phpunit.result.cache
+/.env.local
+/.env.local.php
+/.env.*.local
+.env.backup
+.env.*.backup
+
+# Node.js-specific ignores
+/node_modules/
+/public/hot
+/public/vendor/
