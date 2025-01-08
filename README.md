@@ -26,7 +26,10 @@ php artisan serve
 > [!TIP]
 > [Read the official "Getting Started" Guide for Laravel](https://api-platform.com/docs/laravel/).
 
-Open http://127.0.0.1:8000/api/, your API is already active and documented! 🎉
+Your API is up and running! 🎉
+
+- Visit [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/) to explore the fully active and documented API.
+- Check out the demo application at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
 [//]: # (TODO: ## What Can I Find In This Demo?)
 
