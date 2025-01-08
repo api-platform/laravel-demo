@@ -90,10 +90,8 @@ Your API is up and running! 🎉
 [//]: # ()
 [//]: # ([Read the contributing guide]&#40;.github/CONTRIBUTING.md&#41;)
 
-[//]: # (TODO: ## Credits)
+## Credits
 
-[//]: # ()
-[//]: # (Created by [Kévin Dunglas]&#40;https://dunglas.fr/&#41;. Commercial support available)
-
-[//]: # (at [Les-Tilleuls.coop]&#40;https://les-tilleuls.coop/&#41;.)
+Created by [Vincent Amstoutz](https://github.com/vinceAmstoutz). Commercial support available
+at [Les-Tilleuls.coop](https://les-tilleuls.coop/).
 
