@@ -1,5 +1,6 @@
 # Laravel / PHP-specific ignores
 /vendor/
+/tools/*/vendor/
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 phpstan.neon
