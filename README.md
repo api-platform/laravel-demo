@@ -85,10 +85,9 @@ Your API is up and running! 🎉
 
 [//]: # (| [Deploying to a Kubernetes Cluster]&#40;https://api-platform.com/docs/deployment/kubernetes&#41;                                                                                                              | [Search usage]&#40;helm/api-platform&#41;                                                                                                                                                     |)
 
-[//]: # (TODO:## Contributing)
+## Contributing
 
-[//]: # ()
-[//]: # ([Read the contributing guide]&#40;.github/CONTRIBUTING.md&#41;)
+[Read the contributing guide](.github/CONTRIBUTING.md)
 
 ## Credits
 
