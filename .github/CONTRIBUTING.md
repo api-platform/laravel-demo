@@ -16,7 +16,8 @@ Then, if it appears that it's a real bug, you may report it using GitHub by foll
 * A clear title to resume the issue
 * A description of the workflow needed to reproduce the bug,
 
-> _NOTE:_ Don’t hesitate to give as much information as you can (OS, PHP version extensions...)
+> [!NOTE]
+> Don’t hesitate to give as much information as you can (OS, PHP version extensions...).
 
 ## Pull Requests
 
@@ -24,17 +25,59 @@ Then, if it appears that it's a real bug, you may report it using GitHub by foll
 
 You should base your changes on the `default` branch.
 
-### Matching Coding Standards
+### Matching Quality and Standards
 
-The API Platform project follows [Symfony coding standards](https://symfony.com/doc/current/contributing/code/standards.html).
-But don't worry, you can fix CS issues automatically using the [PHP CS Fixer](http://cs.sensiolabs.org/) tool:
+Before submitting your modifications, make sure to run the tools that ensure your code adheres to API Platform's quality
+and standards.
+
+Set up and run the required quality assurance tools by executing the following command:
+
+```console
+composer run install-tools
+```
+
+#### PHP-CS-Fixer
+
+The API Platform project adheres to the [Symfony Coding Standards](https://symfony.com/doc/current/contributing/code/standards.html)
+and the [PHP-FIG Coding Style Standards](https://www.php-fig.org/per/coding-style/).
+
+But don't worry, you can fix code style(CS) issues automatically using the [PHP CS Fixer](http://cs.sensiolabs.org/) tool:
 
 ```bash
-php-cs-fixer.phar fix
+composer run fix-cs
 ```
 
 And then, add fixed file to your commit before push.
-Be sure to add only **your modified files**. If another files are fixed by cs tools, just revert it before commit.
+
+>[!IMPORTANT]
+> Be sure to add only **your modified files**. If another files are fixed by cs tools, just revert it before commit.
+
+#### PHPStan
+
+API Platform integrates [PHPStan](https://phpstan.org/), a powerfull static analysis tool for PHP that helps you identify
+bugs and potential issues in your code before runtime. It checks for type errors, invalid method calls, and other common mistakes.
+
+Run PHPStan using the following command:
+
+```console
+composer run phpstan
+```
+
+> [!NOTE]
+> In this API Platform demo for Laravel, we do not use a baseline and adhere to PHPStan's maximum level (`max`) as specified
+> in the `phpstan.neon` configuration file. For more details on best practices, refer to the [PHPStan Rule Levels guide](https://phpstan.org/user-guide/rule-levels).
+
+#### Rector
+
+API Platform leverage [Rector](https://getrector.com/), a renowned refactoring tool for PHP. It automates code upgrades, enforces coding standards,
+and applies best practices to your codebase. It’s especially useful for keeping your project up-to-date with the latest
+PHP versions and framework upgrades.
+
+Run Rector using the following command:
+
+```console
+composer run rector
+```
 
 ### Sending a Pull Request
 
@@ -42,6 +85,7 @@ When you send a PR, just make sure that:
 
 * You add valid test cases.
 * Tests are green.
+* Code Quality and Standards Tools are passing successfully.
 * You make a PR on the related documentation in the [api-platform/docs](https://github.com/api-platform/docs) repository.
 * You make the PR on the same branch you based your changes on. If you see commits
   that you did not make in your PR, you're doing it wrong.
