@@ -1,0 +1,9 @@
+includes:
+    - tools/phpstan/vendor/larastan/larastan/extension.neon
+    - tools/phpstan/vendor/nesbot/carbon/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    level: max
