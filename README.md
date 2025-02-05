@@ -19,8 +19,10 @@ This application is a demonstration for the [API Platform Framework](https://api
 ```console
 git clone https://github.com/api-platform/laravel-demo.git
 cd laravel-demo
+composer install
 php artisan api-platform:install
-php artisan serve
+php artisan migrate
+composer dev
 ```
 
 > [!TIP]
