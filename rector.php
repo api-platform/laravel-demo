@@ -15,6 +15,7 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use RectorLaravel\Set\LaravelSetList;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -24,7 +25,11 @@ return RectorConfig::configure()
         __DIR__.'/routes',
         __DIR__.'/tests',
     ])
+    ->withSkipPath(
+        __DIR__.'/bootstrap/cache'
+    )
     ->withPhpSets() // PHP version based on the composer.json version
+    ->withImportNames(removeUnusedImports: true)
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
@@ -43,6 +48,9 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_110,
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_COLLECTION,
+    ])
+    ->withSkip([
+        PreferPHPUnitThisCallRector::class,
     ])
     ->withParallel()
     ->withCache(__DIR__.'/storage/rector', FileCacheStorage::class);
