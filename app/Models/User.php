@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use ApiPlatform\Metadata\ApiResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+#[ApiResource]
 class User extends Authenticatable
 {
     use HasFactory;
@@ -40,7 +42,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
+        //TODO (Vincent A.): password creation handle
+        //'password',
         'remember_token',
     ];
 
