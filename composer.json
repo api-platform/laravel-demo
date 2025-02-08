@@ -72,8 +72,8 @@
         ],
         "tools": [
             "@fix-cs",
-            "@run-phpstan",
-            "@run-rector"
+            "@phpstan",
+            "@rector"
         ]
     },
     "extra": {
