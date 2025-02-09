@@ -1,0 +1,81 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+env:
+  fail-fast: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
+        php-versions: [ '8.3' ] # TODO: Await PHP-CS-Fixer support for PHP 8.4 compatibility
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP with quality tools
+        uses: shivammathur/setup-php@v2
+
+        #TODO: extensions and caching if we use them
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer, php-cs-fixer, rector, phpstan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Lint composer
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Composer normalize
+        run: composer normalize --dry-run
+
+      - name: Composer audit
+        run: composer audit
+
+      - name: Setup PHP Code Quality Tools
+        run: composer run install-tools
+
+      - name: Lint PHP files (CS)
+        run: composer run fix-cs -- --dry-run --diff --using-cache=no --stop-on-violation --show-progress=bar
+
+      - name: Static analysis on PHP files
+        #TODO: replace with larastan when https://github.com/api-platform/laravel-demo/pull/4 will be merged
+        run: composer run phpstan -- -n
+
+      - name: Lint with Rector
+        run: composer run rector -- --dry-run --clear-cache
+
+      # Lint other files with Super Linter
+      - name: Lint with Super Linter
+        uses: super-linter/super-linter/slim@v7
+        env:
+          DEFAULT_BRANCH: "origin/4.0"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_PHP_PHPSTAN: false
+          VALIDATE_PHP: false
+          VALIDATE_EDITORCONFIG: false
+          VALIDATE_JSCPD: false
+          VALIDATE_MARKDOWN_PRETTIER: false

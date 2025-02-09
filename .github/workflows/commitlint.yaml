@@ -1,0 +1,22 @@
+name: commitlint
+
+on: [pull_request]
+
+jobs:
+  commitlint:
+    if: github.event_name == 'pull_request'
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run commitlint
+        run: |
+          commit=$(gh api \
+            /repos/${{ github.repository }}/pulls/${{github.event.number}}/commits \
+            | jq -r '.[0].commit.message' \
+            | head -n 1)
+          # we can't use npx see https://github.com/conventional-changelog/commitlint/issues/613
+          echo '{}' > package.json
+          npm install --no-fund --no-audit @commitlint/config-conventional @commitlint/cli
+          echo $commit | ./node_modules/.bin/commitlint -g .commitlintrc

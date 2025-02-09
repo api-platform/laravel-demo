@@ -4,6 +4,9 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
+    <extensions>
+        <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension"/>
+    </extensions>
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>

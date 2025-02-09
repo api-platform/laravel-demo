@@ -1,9 +1,8 @@
-includes:
-    - tools/phpstan/vendor/larastan/larastan/extension.neon
-    - tools/phpstan/vendor/nesbot/carbon/extension.neon
-
 parameters:
     paths:
         - app/
-
+    excludePaths:
+        - vendor/
+        - tools/*/vendor/
+        - public/
     level: max
