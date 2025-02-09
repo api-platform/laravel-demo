@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
-        php-versions: [ '8.3', '8.4' ]
+        php-versions: [ '8.3' ] # TODO: Await PHP-CS-Fixer support for PHP 8.4 compatibility
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -62,9 +62,20 @@ jobs:
         run: composer run fix-cs -- --dry-run --diff --using-cache=no --stop-on-violation --show-progress=bar
 
       - name: Static analysis on PHP files
+        #TODO: replace with larastan when https://github.com/api-platform/laravel-demo/pull/4 will be merged
         run: composer run phpstan -- -n
 
       - name: Lint with Rector
-        run: composer run rector -- -n --no-cache
+        run: composer run rector -- --dry-run --clear-cache
 
-      #TODO: lint MD files, lint JS & CSS
+      # Lint other files with Super Linter
+      - name: Lint with Super Linter
+        uses: super-linter/super-linter/slim@v7
+        env:
+          DEFAULT_BRANCH: "origin/4.0"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_PHP_PHPSTAN: false
+          VALIDATE_PHP: false
+          VALIDATE_EDITORCONFIG: false
+          VALIDATE_JSCPD: false
+          VALIDATE_MARKDOWN_PRETTIER: false
