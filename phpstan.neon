@@ -1,9 +1,15 @@
 includes:
-    - tools/phpstan/vendor/larastan/larastan/extension.neon
-    - tools/phpstan/vendor/nesbot/carbon/extension.neon
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
 
 parameters:
+    level: max
     paths:
         - app/
-
-    level: max
+        - config/
+        - bootstrap/app.php
+        - bootstrap/providers.php
+        - database/
+        - routes/
+        - storage/app/
+        - tests/
